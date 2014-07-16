@@ -61,7 +61,7 @@ grant all on common.user_ladder to ladders;
 create table common.ladder_user_rating (
     ladder_id bigint not null references common.ladder(id),
     user_id bigint not null references common.user(id),
-    caused_by_challenge bigint not null references common.challenge(id),
+    caused_by_challenge bigint references common.challenge(id),
     rating int not null,
     effective_date timestamp not null,
     expiry_date timestamp not null
