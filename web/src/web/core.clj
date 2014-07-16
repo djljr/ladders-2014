@@ -1,5 +1,6 @@
 (ns web.core
-  (:require [web.users :as users]
+  (:require [web.user :as user]
+            [web.challenge :as challenge]
             [cemerick.friend :as friend]
             (cemerick.friend [workflows :as workflows]
                              [credentials :as creds])
@@ -12,7 +13,8 @@
 
 (html/deftemplate index "templates/index.html" 
   [] 
-  [:span.users] (html/content (users/all)))
+  [:div.users] (html/content (user/all))
+  [:div.challenges] (html/content (challenge/all)))
 
 (html/deftemplate login "templates/login.html" [])
 (html/deftemplate error "templates/error.html" [])
@@ -25,11 +27,17 @@
   (POST "/signup" {{:keys [username password confirm] :as params} :params :as req}
     (if (and (not-any? str/blank? [username password confirm])
              (= password confirm))
-      (let [user (users/create (select-keys params [:username :password :admin]))]
+      (let [user (user/create! (select-keys params [:username :password :admin]))]
         (friend/merge-authentication
           (resp/redirect "/auth")
           user))
       (assoc (resp/redirect "/login") :flash "passwords don't match!")))
+  (POST "/challenge" req
+    (friend/authenticated 
+        (let [user friend/current-authentication
+              opponent (:opponent (req :params))]
+            (let [ch (challenge/create! (:id user) opponent)]
+              (index)))))
   (GET "/auth" req 
     (friend/authenticated (index))))
 
@@ -42,5 +50,5 @@
      :unauthorized-handler #(-> (error)
                                 resp/response
                                 (resp/status 401))
-     :credential-fn #(creds/bcrypt-credential-fn users/find-user %)
+     :credential-fn #(creds/bcrypt-credential-fn user/find-user %)
      :workflows [(workflows/interactive-form)]})))
