@@ -42,5 +42,5 @@
      :unauthorized-handler #(-> (error)
                                 resp/response
                                 (resp/status 401))
-     :credentials-fn #(creds/bcrypt-credential-fn users/find-user %)
+     :credential-fn #(creds/bcrypt-credential-fn users/find-user %)
      :workflows [(workflows/interactive-form)]})))
