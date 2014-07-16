@@ -9,12 +9,32 @@
                        [route :as route])
             [ring.util.response :as resp]
             [net.cgrand.enlive-html :as html]
+            [pandect.core :as hash]
+            [clj-time.format :as fmt]
             [clojure.string :as str]))
 
+(def ^:dynamic *challenge-sel* [[:.open-challenges (html/nth-of-type 1)] :> html/first-child])
+(def ^:dynamic *player-list-sel* [[:.player-list (html/nth-of-type 1)] :> html/first-child])
+
+(defn gravatar [name]
+  (str "http://www.gravatar.com/avatar/" (hash/md5 name) "?d=identicon"))
+
+(html/defsnippet challenge-card "templates/index.html" *challenge-sel* 
+  [{:keys [username rank date]}]
+  [:div.challenge-player-name] (html/content (str rank ". " username))
+  [:div.challenge-player-icon :img] (html/set-attr :src (gravatar username))
+  [:div.challenge-date] (html/content (fmt/unparse (fmt/formatter "yyyy-MM-dd HH:mm:ss") date)))
+
+(html/defsnippet player-list "templates/index.html" *player-list-sel*
+  [{:keys [id username rank]}]
+  [:span.player-name] (html/content (str rank ". " username))
+  [:span.player-icon] (html/set-attr :style (str "background-image:url(" (gravatar username) ")"))
+  [:a.challenge-player] (html/set-attr :href (str "/challenge?opponent=" id)))
+
 (html/deftemplate index "templates/index.html" 
-  [] 
-  [:div.users] (html/content (user/all))
-  [:div.challenges] (html/content (challenge/all)))
+  []
+  [:.open-challenges] (html/content (map challenge-card (challenge/all-full (:id (friend/current-authentication)))))
+  [:.player-list] (html/content (map player-list (user/all))))
 
 (html/deftemplate login "templates/login.html" [])
 (html/deftemplate error "templates/error.html" [])
@@ -39,7 +59,8 @@
             (let [ch (challenge/create! (:id user) opponent)]
               (index)))))
   (GET "/auth" req 
-    (friend/authenticated (index))))
+    (friend/authenticated (index)))
+  (route/resources "/"))
 
 (def app (handler/site
   (friend/authenticate

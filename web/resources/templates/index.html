@@ -1,8 +1,91 @@
-<html>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>Ladders</title>
+  <meta name="description" content="Keep track of who's best.">
+
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
 <body>
-    <h1> index </h1>
-    <div class="users">u</div>
-    <div class="challenges">c</div>
-    <div><form action="/challenge" method="post"><input type="submit" value="challenge"><input type="hidden" name="opponent" value="2"></form>
+  <header>
+    <div class="header-inner">
+      <div id="logo">Ladders</div>
+      <nav>
+        <ul>
+          <li><a href="#">Schedule</a></li> <!-- route: /ladder-udid/schedule -->
+          <li><a href="#">Ladders</a></li> <!-- route: /ladders -->
+          <li><a href="#">Profile</a></li> <!-- route: /profile -->
+          <li><a href="/signout">Sign Out</a></li>
+          <li><a href="/login">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div id="body-content">
+    <div class="sidebar">
+      <h1>Yodle Darts Association</h1>
+      <h2>Administrator: <a href="#"><!-- ladder administrator name --></a></h2>
+
+      <ol class="player-list">
+        <li class="player-list-item">
+          <span class="player-icon" style="background-image: url(<!-- player-image-icon -->)"></span>
+          <span class="player-name"><!-- player rank + player name: 1. Harry Potter --></span>
+          <a class="challenge-player">Challenge</a>
+        </li>
+        <li class="player-list-item">
+          <span class="player-icon" style="background-image: url(<!-- player-image-icon -->)"></span>
+          <span class="player-name"><!-- player rank + player name: 1. Harry Potter --></span>
+          <a class="challenge-player">Challenge</a>
+        </li>
+        <!-- repeat player-list-items -->
+      </ol>
+    </div><!-- end player-list -->
+    <div class="main">
+      <h1>Open Challenges</h1>
+      <h2>Oh snap! You've been challenged, sucka.</h2>
+      <div class="open-challenges">
+        <div class="open-challenge-card">
+          <div class="challenge-player-icon"><img src="<!-- player-icon-url -->" /></div>
+          <div class="challenge-player-info">
+            <div class="challenge-player-name"><!-- challenger-name: Donald Higgins --></div>
+            <div class="challenge-date"><!-- challenge date: Month DD, H:MM AM --></div>
+            <button class="accept-challenge">Accept</button>
+          </div>
+        </div>
+        <div class="open-challenge-card">
+          <div class="challenge-player-icon"><img src="<!-- player-icon-url -->" /></div>
+          <div class="challenge-player-info">
+            <div class="challenge-player-name"><!-- challenger-name: Donald Higgins --></div>
+            <div class="challenge-date"><!-- challenge date: Month DD, H:MM AM --></div>
+            <button class="accept-challenge">Accept</button>
+          </div>
+        </div>
+
+        <!-- repeat list of challenge-cards -->
+
+      </div><!-- end open-challenges -->
+
+<!--       <div class="trash-talk">
+        <h1>Trash Talk</h1>
+        <textarea id="wall-post"></textarea>
+      </div> -->
+
+    </div>
+  </div>
+
+  <footer>
+
+  </footer>
 </body>
 </html>

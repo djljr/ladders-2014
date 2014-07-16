@@ -9,6 +9,9 @@
 (defn all []
   (sql/query spec ["select * from common.challenge"]))
 
+(defn all-full [current-user]
+  (sql/query spec ["select o.username, 1 as rank from common.challenge c join common.user o on o.id = c.challenger_user where opponent_user = ?" current-user]))
+
 (defn create! [challenger opponent]
   (let [post (first (sql/insert! spec :common.post {:creator_user 1}))
         post_id (:id post)]

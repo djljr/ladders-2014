@@ -10,7 +10,7 @@
   (first (sql/query spec ["select id, username, password from common.user where username = ?" username])))
 
 (defn all []
-  (sql/query spec ["select * from common.user"]))
+  (sql/query spec ["select id, username, 1 as rank from common.user"]))
 
 (defn create! [{:keys [username password admin] :as user-data}]
   (let [bcrypt-password (creds/hash-bcrypt password)]
