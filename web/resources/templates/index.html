@@ -13,7 +13,7 @@
 
   <meta name="viewport" content="width=device-width">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
@@ -23,7 +23,7 @@
       <nav>
         <ul>
           <li><a href="#">Schedule</a></li> <!-- route: /ladder-udid/schedule -->
-          <li><a href="#">Ladders</a></li> <!-- route: /ladders -->
+          <li><a href="/ladders">Ladders</a></li> <!-- route: /ladders -->
           <li><a href="#">Profile</a></li> <!-- route: /profile -->
           <li><a href="/signout">Sign Out</a></li>
           <li><a href="/login">Login</a></li>
@@ -34,8 +34,8 @@
 
   <div id="body-content">
     <div class="sidebar">
-      <h1>Yodle Darts Association</h1>
-      <h2>Administrator: <a href="#"><!-- ladder administrator name --></a></h2>
+      <h1 class="ladder-name">YDA</h1>
+      <h2>Administrator: <a class="ladder-admin" href="#"><!-- ladder administrator name --></a></h2>
 
       <ol class="player-list">
         <li class="player-list-item">
@@ -48,7 +48,6 @@
           <span class="player-name"><!-- player rank + player name: 1. Harry Potter --></span>
           <a class="challenge-player">Challenge</a>
         </li>
-        <!-- repeat player-list-items -->
       </ol>
     </div><!-- end player-list -->
     <div class="main">
@@ -60,7 +59,7 @@
           <div class="challenge-player-info">
             <div class="challenge-player-name"><!-- challenger-name: Donald Higgins --></div>
             <div class="challenge-date"><!-- challenge date: Month DD, H:MM AM --></div>
-            <button class="accept-challenge">Accept</button>
+            <a class="accept-challenge">Accept</a>
           </div>
         </div>
         <div class="open-challenge-card">
@@ -68,19 +67,22 @@
           <div class="challenge-player-info">
             <div class="challenge-player-name"><!-- challenger-name: Donald Higgins --></div>
             <div class="challenge-date"><!-- challenge date: Month DD, H:MM AM --></div>
-            <button class="accept-challenge">Accept</button>
+            <a class="accept-challenge">Accept</a>
           </div>
         </div>
-
-        <!-- repeat list of challenge-cards -->
-
       </div><!-- end open-challenges -->
-
-<!--       <div class="trash-talk">
-        <h1>Trash Talk</h1>
-        <textarea id="wall-post"></textarea>
-      </div> -->
-
+      <h1>Accepted Challenges</h1>
+      <div class="accepted-challenges">
+        <div class="game-card">
+          <div class="game-player1-icon"><img src="<!-- player-icon-url -->" /></div>
+          <div class="game-player2-icon"><img src="<!-- player-icon-url -->" /></div>
+          <div class="game-player-info">
+            <div class="game-players"><!-- challenger-name: Donald Higgins --></div>
+            <div class="accepted-date"><!-- challenge date: Month DD, H:MM AM --></div>
+            <a class="win-game">Win</a><a class="lose-game">Lose</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
