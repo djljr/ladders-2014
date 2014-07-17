@@ -15,7 +15,7 @@
             [clojure.string :as str]))
 
 (def ^:dynamic *challenge-sel* [[:.open-challenges (html/nth-of-type 1)] :> html/first-child])
-(def ^:dynamic *accepted-sel* [[:.accepted-challenges (html/nth-of-type 1)] :> html/first-child])
+(def ^:dynamic *accepted-sel* [[:.accepted-challenges] :> html/first-child])
 (def ^:dynamic *player-list-sel* [[:.player-list (html/nth-of-type 1)] :> html/first-child])
 (def ^:dynamic *ladder-sel* [[:.ladder-list (html/nth-of-type 1)] :> html/first-child])
 
@@ -29,7 +29,7 @@
   (str (gravatar name) "?d=retro"))
 
 (defn format-date [date]
-  (fmt/unparse (fmt/formatter "yyyy-MM-dd HH:mm:ss" (ct/from-sql-time date))))
+  (fmt/unparse (fmt/formatter "yyyy-MM-dd HH:mm:ss") (ct/from-sql-time date)))
 
 (html/defsnippet challenge-card "templates/index.html" *challenge-sel* 
   [ladder {:keys [id username rank date]}]
@@ -48,7 +48,8 @@
   [ladder {:keys [id player1 player2 date]}]
   [:div.game-player1-icon :img] (html/set-attr :src (gravatar-ident player1))
   [:div.game-player2-icon :img] (html/set-attr :src (gravatar-ident player2))
-  [:div.game-players] (html/content (player1 " vs. " player2))
+  [:span.player1-name] (html/content player1)
+  [:span.player2-name] (html/content player2)
   [:div.accepted-date] (html/content (format-date date))
   [:a.win-game] (html/set-attr :href (str "/ladder/" ladder "/challenge/" id "/win"))
   [:a.lose-game] (html/set-attr :href (str "/ladder/" ladder "/challenge/" id "/lose")))
