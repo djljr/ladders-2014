@@ -4,7 +4,7 @@
             [clj-time.coerce :as c]))
 
 (def spec (or (System/getenv "DATABASE_URL")
-              "postgresql://localhost:5432/ladders?user=ladders&password=password"))
+              "postgresql://localhost:5432/ladders?user=ladders&password=ladders"))
 
 (defn find-ladder [ladder]
   (first (sql/query spec [
